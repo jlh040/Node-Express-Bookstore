@@ -1,0 +1,28 @@
+{
+  "name": "express-bookstore",
+  "version": "1.0.0",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "keywords": [],
+  "author": "Jeff",
+  "license": "ISC",
+  "description": "A bookstore JSON API",
+  "dependencies": {
+    "express": "^4.17.1",
+    "jsonschema": "^1.2.4",
+    "locus": "^2.0.1",
+    "pg": "^8.3.3",
+    "supertest": "^3.3.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jlh040/Node-Express-Bookstore.git"
+  },
+  "bugs": {
+    "url": "https://github.com/jlh040/Node-Express-Bookstore/issues"
+  },
+  "homepage": "https://github.com/jlh040/Node-Express-Bookstore#readme"
+}
