@@ -6,8 +6,10 @@ const app = require('../app');
 const db = require('../db');
 const request = require('supertest');
 
-let testBook
+// Maka a variable to hold the test book
+let testBook;
 
+// Insert a test book into the db and assign it to the variable
 beforeEach(async () => {
     const result = await db.query(`
         INSERT INTO books
@@ -33,20 +35,38 @@ beforeEach(async () => {
     testBook = result.rows[0];
 });
 
+// Delete all books after each test
 afterEach(async () => {
     await db.query(`
         DELETE FROM books`);
 });
 
+// Close the database connection
 afterAll(() => {
     db.end();
 });
 
 describe('GET /books', () => {
     test('Get all books', async () => {
-        expect(1).toBe(1);
+        const resp = await request(app).get('/books');
+
+        expect(resp.statusCode).toBe(200)
+        expect(resp.body).toEqual({
+            books: [
+                {
+                    isbn: '643234212',
+                    amazon_url: 'http://amazon.com/book/4',
+                    author: 'Mark Diesel',
+                    language: 'english',
+                    pages: 467,
+                    publisher: 'Penguin Books',
+                    title: 'The Journey',
+                    year: 2007
+                }
+            ] 
+        })
     })
-})
+});
 
 
 
