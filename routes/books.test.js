@@ -205,7 +205,18 @@ describe('PUT /books/:id', () => {
 });
 
 describe('DELETE /books/:id', () => {
-    (test)
+    test('Delete a book', async () => {
+        const resp = await request(app).delete(`/books/${testBook.isbn}`);
+        expect(resp.statusCode).toBe(200);
+        expect(resp.body).toEqual({
+            message: 'Book deleted'
+        });
+    });
+
+    test('Respond with 404 if book cannot be found', async () => {
+        const resp = await request(app).delete('/books/0101010101010101010');
+        expect(resp.statusCode).toBe(404);
+    })
 })
 
 
