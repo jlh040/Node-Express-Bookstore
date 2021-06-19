@@ -150,4 +150,62 @@ describe('POST /books', () => {
     });
 });
 
+describe('PUT /books/:id', () => {
+    test('Update a book', async () => {
+        testBook.title = 'The Great Escape'
+
+        const resp = await request(app)
+            .put(`/books/${testBook.isbn}`)
+            .send(testBook)
+        
+        expect(resp.statusCode).toBe(200);
+        expect(resp.body).toEqual({
+            book: {
+                isbn: '643234212',
+                amazon_url: 'http://amazon.com/book/4',
+                author: 'Mark Diesel',
+                language: 'english',
+                pages: 467,
+                publisher: 'Penguin Books',
+                title: 'The Great Escape',
+                year: 2007
+            }
+        });
+    });
+
+    test('Respond with 400 if invalid data is sent', async () => {
+        testBook.year = true;
+        testBook.pages = "definitely";
+
+        const resp = await request(app)
+            .put(`/books/${testBook.isbn}`)
+            .send(testBook);
+        
+        expect(resp.statusCode).toBe(400);
+    });
+
+    test('Respond with 400 if data is missing', async () => {
+        delete testBook.title;
+        delete testBook.publisher;
+
+        const resp = await request(app)
+            .put(`/books/${testBook.isbn}`)
+            .send(testBook);
+        
+        expect(resp.statusCode).toBe(400);
+    });
+
+    test('404 if book is not found', async () => {
+        const resp = await request(app)
+            .put(`/books/3429999991111112222`)
+            .send(testBook);
+        
+        expect(resp.status).toBe(404);
+    })
+});
+
+describe('DELETE /books/:id', () => {
+    (test)
+})
+
 
