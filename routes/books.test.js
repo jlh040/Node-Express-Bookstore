@@ -110,7 +110,44 @@ describe('POST /books', () => {
         
         expect(resp.statusCode).toBe(201);
         expect(resp.body).toEqual({book})
-    })
+    });
+
+    test('Do incomplete requests get rejected?', async () => {
+        const book = {
+            isbn: '7989799798',
+            amazon_url: 'http://amazon.com/book/4',
+            language: 'english',
+            pages: 467,
+            publisher: 'Penguin Books',
+            title: 'The Journey'
+        }
+
+        const resp = await request(app)
+            .post('/books')
+            .send(book);
+
+        expect(resp.statusCode).toBe(400);
+    });
+
+    test('If we pass in the wrong types, will the request be rejected?', async () => {
+        const book = {
+            isbn: false,
+            amazon_url: 'http://amazon.com/book/4',
+            author: 500,
+            language: 'english',
+            pages: 467,
+            publisher: 'Penguin Books',
+            title: 'The Journey',
+            year: true,
+
+        }
+
+        const resp = await request(app)
+            .post('/books')
+            .send(book);
+
+        expect(resp.statusCode).toBe(400);
+    });
 });
 
 
