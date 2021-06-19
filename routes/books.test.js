@@ -49,7 +49,6 @@ afterAll(() => {
 describe('GET /books', () => {
     test('Get all books', async () => {
         const resp = await request(app).get('/books');
-
         expect(resp.statusCode).toBe(200)
         expect(resp.body).toEqual({
             books: [
@@ -66,6 +65,25 @@ describe('GET /books', () => {
             ] 
         })
     })
+});
+
+describe('GET /:id', () => {
+    test('Get a single book', async () => {
+        const resp = await request(app).get(`/books/${testBook.isbn}`)
+        expect(resp.statusCode).toBe(200);
+        expect(resp.body).toEqual({
+            book: {
+                isbn: '643234212',
+                amazon_url: 'http://amazon.com/book/4',
+                author: 'Mark Diesel',
+                language: 'english',
+                pages: 467,
+                publisher: 'Penguin Books',
+                title: 'The Journey',
+                year: 2007
+            } 
+        }) 
+    });
 });
 
 
