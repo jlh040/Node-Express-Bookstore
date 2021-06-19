@@ -12,7 +12,7 @@
 
     - Allows a user to see all books in their database.
 
-  - **GET /books/<isbn>**
+  - **GET /books/:isbn**
 
     - Allows a user to see more information regarding a single book.
 
@@ -37,13 +37,13 @@
       }
       ```
 
-  - **PATCH /books/<isbn>**
+  - **PATCH /books/:isbn**
 
     - Allows a user to update a book.
     - Requires **amazon_url, author, language, pages, publisher, title, and year**.
     - See the POST route for an example .
 
-  - **DELETE /books/<isbn>**
+  - **DELETE /books/:isbn**
 
     - Allows a user to delete a book.
 
