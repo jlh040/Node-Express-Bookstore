@@ -84,6 +84,11 @@ describe('GET /:id', () => {
             } 
         }) 
     });
+
+    test('404 if book not found', async () => {
+        const resp = await request(app).get('/books/999999999');
+        expect(resp.status).toBe(404);
+    })
 });
 
 
