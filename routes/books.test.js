@@ -67,7 +67,7 @@ describe('GET /books', () => {
     })
 });
 
-describe('GET /:id', () => {
+describe('GET /books/:id', () => {
     test('Get a single book', async () => {
         const resp = await request(app).get(`/books/${testBook.isbn}`)
         expect(resp.statusCode).toBe(200);
@@ -91,5 +91,26 @@ describe('GET /:id', () => {
     })
 });
 
+describe('POST /books', () => {
+    test('Create a book', async () => {
+        const book = {
+            isbn: '7989799798',
+            amazon_url: 'http://amazon.com/book/4',
+            author: 'Mark Diesel',
+            language: 'english',
+            pages: 467,
+            publisher: 'Penguin Books',
+            title: 'The Journey',
+            year: 2007
+        }
+
+        const resp = await request(app)
+            .post('/books')
+            .send(book);
+        
+        expect(resp.statusCode).toBe(201);
+        expect(resp.body).toEqual({book})
+    })
+});
 
 
