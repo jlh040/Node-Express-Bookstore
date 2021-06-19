@@ -42,7 +42,8 @@ router.post("/", async function (req, res, next) {
 
     const book = await Book.create(req.body);
     return res.status(201).json({ book });
-  } catch (err) {
+  } 
+  catch (err) {
     return next(err);
   }
 });
@@ -51,9 +52,16 @@ router.post("/", async function (req, res, next) {
 
 router.put("/:isbn", async function (req, res, next) {
   try {
+    const result = jsonschema.validate(req.body, updateSchema);
+    if (!result.valid) {
+      const errors = result.errors.map(obj => obj.stack);
+      return next(new ExpressError(errors, 400));
+    }
+
     const book = await Book.update(req.params.isbn, req.body);
     return res.json({ book });
-  } catch (err) {
+  } 
+  catch (err) {
     return next(err);
   }
 });
